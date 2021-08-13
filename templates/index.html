@@ -1,0 +1,70 @@
+<!--
+The homepage is usually called index.html. The structure of the html "head" is similar, and in "body", it is good to
+put everything in 1 div which contains everything. We put some text...
+We need to create:
+1 FORM = 1 INPUT + 1 BUTTON
+The method of the form can be:
+    - GET (normally, you call file from the server, you just need the data)
+    - POST (when you send the data to the server)
+Here we have POST!
+enctype="multipart/form-data"
+    - enctype is "multipart/form-data" to be able to run with Flask
+
+
+<input type="file" accept=".csv" name="mirko-file">
+            - type is file (that we upload)
+            - accept - which type of files to accept
+            - name (name of the file used in python script)
+                        old:    (- title is shown when the cursor is over the input,)
+                                (- placeholder is the default text shown,)
+                                (- type that is only allowed to enter)
+                                (- min, max, step - for numbers to tell the range and step (1 is by default) )
+                                (- name is used for python (give me the value for the input where name=email_name) )
+                                (- required is written if it is required entry)
+<button type="submit"> Submit </button>
+            - inside the tag goes the name of the button
+            - type can be submit (to submit all form), reset (to reset the whole form)
+
+We check if the form and pages are working well...
+We see that there is a button "Chose file"
+                                (create a virtual env..... create a flask....
+                                After making Flask, you should try)
+
+
+"include btn ignore missing" change to:
+        % if btn %
+            % include btn %
+        % endif %
+With this, you put there the download.html part of the code in index.html. Because in the index we don't have
+defined 'btn' at the beginning, we have to say 'ignore missing'
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<title>Super Geocoder</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Super Geocoder</title>
+    <link href="../static/css/main.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Super Geocoder</h1>
+        <h3>Please upload your .csv file. The values containing addresses should be in a column named address or Address</h3>
+        <form action="{{url_for('success')}}" method="POST" enctype="multipart/form-data">      <!--making a form, it activates other page, method is post-->
+            <input type="file" accept=".csv" name="mirko-file"><br>
+            <button type="submit"> Submit </button>
+        </form>
+        <div class="message">
+            {{text | safe}}
+        </div>
+        {% for table in tables %}
+            {{titles[loop.index]}}
+            {{ table|safe }}
+        {% endfor %}
+        {% if btn %}
+            {% include btn %}
+        {% endif %}
+    </div>
+</body>
+</html>
